@@ -461,6 +461,9 @@
             <div class="inp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
             <input type="text" class="iris-input" placeholder="e.g. Gateway-01" id="ti-device"/>
           </div>
+          <div>
+            <button class="push-btn primary" onclick="ripple(this);showToast('Device Name sent!')">Send</button>
+          </div>
           <span class="inp-hint" id="ti-device-hint">Enter a unique device identifier</span>
         </div>
       </div>
@@ -469,6 +472,10 @@
         <div class="text-input-wrap" style="width:100%;">
           <textarea class="iris-input" placeholder="Add device notes here…"></textarea>
         </div>
+        <div>
+          <button class="push-btn primary" onclick="ripple(this);showToast('Message sent!')">Send</button>
+        </div>
+        
       </div>
     </div>
   </div>
