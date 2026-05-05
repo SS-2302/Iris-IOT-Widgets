@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Iris IoT — Widget Library</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <!-- ════════ 1. TOGGLE SWITCHES ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">01</div>
+      <div class="sec-title">Toggle Switch</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <div class="widget" style="min-width:140px;">
+        <div class="widget-label">Power</div>
+        <div class="toggle-track on" id="tg1" onclick="toggleSwitch('tg1','tg1-state')">
+          <div class="toggle-thumb"></div>
+        </div>
+        <div class="toggle-state" id="tg1-state">ON</div>
+      </div>
+      <div class="widget" style="min-width:140px;">
+        <div class="widget-label">Pump</div>
+        <div class="toggle-track" id="tg2" onclick="toggleSwitch('tg2','tg2-state')">
+          <div class="toggle-thumb"></div>
+        </div>
+        <div class="toggle-state" id="tg2-state">OFF</div>
+      </div>
+      <div class="widget" style="min-width:140px;">
+        <div class="widget-label">Alarm Enable</div>
+        <div class="toggle-track on" id="tg3" onclick="toggleSwitch('tg3','tg3-state')">
+          <div class="toggle-thumb"></div>
+        </div>
+        <div class="toggle-state" id="tg3-state">ON</div>
+      </div>
+      <div class="widget" style="min-width:140px;">
+        <div class="widget-label">Data Log</div>
+        <div class="toggle-track" id="tg4" onclick="toggleSwitch('tg4','tg4-state')">
+          <div class="toggle-thumb"></div>
+        </div>
+        <div class="toggle-state" id="tg4-state">OFF</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 2. PUSH BUTTONS ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">02</div>
+      <div class="sec-title">Push Button</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <div class="widget">
+        <div class="widget-label">Primary Action</div>
+        <button class="push-btn primary" onclick="ripple(this);showToast('Command sent!')">Send Command</button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Danger Action</div>
+        <button class="push-btn danger" onclick="ripple(this);showToast('Emergency stop triggered!','#FF5F57')">Emergency Stop</button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Outline</div>
+        <button class="push-btn outline" onclick="ripple(this);showToast('Config saved')">Save Config</button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Ghost</div>
+        <button class="push-btn ghost" onclick="ripple(this);showToast('Refreshed')">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 3. DISPLAY TEXT ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">03</div>
+      <div class="sec-title">Display (Text)</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <div class="widget">
+        <div class="widget-label">Temperature</div>
+        <div class="display-box big">
+          <div class="display-val" id="disp-temp">38.4</div>
+          <div class="display-unit">°C — Sensor A7</div>
+        </div>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Pressure</div>
+        <div class="display-box">
+          <div class="display-val">1.24</div>
+          <div class="display-unit">bar — Line P3</div>
+        </div>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Status</div>
+        <div class="display-box success-box">
+          <div class="display-val">ONLINE</div>
+          <div class="display-unit">Gateway-01</div>
+        </div>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Alert</div>
+        <div class="display-box alert-box">
+          <div class="display-val">FAULT</div>
+          <div class="display-unit">Motor-12 overload</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 4. GAUGE — CIRCULAR ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">04</div>
+      <div class="sec-title">Gauge — Circular</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <!-- Gauge 1 -->
+      <div class="widget">
+        <div class="widget-label">CPU Load</div>
+        <svg class="gauge-svg" width="110" height="80" viewBox="0 0 110 80">
+          <path d="M15 72 A50 50 0 0 1 95 72" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="9" stroke-linecap="round"/>
+          <path id="g-cpu" d="M15 72 A50 50 0 0 1 95 72" fill="none" stroke="url(#gg1)" stroke-width="9" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="47"/>
+          <defs><linearGradient id="gg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0072FF"/><stop offset="100%" stop-color="#00C6FF"/></linearGradient></defs>
+          <text x="55" y="68" text-anchor="middle" fill="#E8F0FF" font-size="15" font-family="Syne,sans-serif" font-weight="800" id="g-cpu-val">70%</text>
+        </svg>
+      </div>
+      <!-- Gauge 2 -->
+      <div class="widget">
+        <div class="widget-label">Flow Rate</div>
+        <svg class="gauge-svg" width="110" height="80" viewBox="0 0 110 80">
+          <path d="M15 72 A50 50 0 0 1 95 72" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="9" stroke-linecap="round"/>
+          <path d="M15 72 A50 50 0 0 1 95 72" fill="none" stroke="url(#gg2)" stroke-width="9" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="31"/>
+          <defs><linearGradient id="gg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00FFB2"/><stop offset="100%" stop-color="#00C6FF"/></linearGradient></defs>
+          <text x="55" y="68" text-anchor="middle" fill="#E8F0FF" font-size="15" font-family="Syne,sans-serif" font-weight="800">80%</text>
+        </svg>
+      </div>
+      <!-- Gauge 3: Warning -->
+      <div class="widget">
+        <div class="widget-label">Tank Level</div>
+        <svg class="gauge-svg" width="110" height="80" viewBox="0 0 110 80">
+          <path d="M15 72 A50 50 0 0 1 95 72" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="9" stroke-linecap="round"/>
+          <path d="M15 72 A50 50 0 0 1 95 72" fill="none" stroke="url(#gg3)" stroke-width="9" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="110"/>
+          <defs><linearGradient id="gg3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FF9F40"/><stop offset="100%" stop-color="#FF5F57"/></linearGradient></defs>
+          <text x="55" y="68" text-anchor="middle" fill="#E8F0FF" font-size="15" font-family="Syne,sans-serif" font-weight="800">30%</text>
+        </svg>
+      </div>
+      <!-- Gauge 4: Full arc with needle -->
+      <div class="widget">
+        <div class="widget-label">Pressure</div>
+        <svg class="gauge-svg" width="120" height="80" viewBox="0 0 120 80">
+          <defs><linearGradient id="gg4" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00FFB2"/>
+            <stop offset="50%" stop-color="#FFB800"/>
+            <stop offset="100%" stop-color="#FF5F57"/>
+          </linearGradient></defs>
+          <path d="M14 72 A46 46 0 0 1 106 72" fill="none" stroke="url(#gg4)" stroke-width="8" stroke-linecap="round" opacity=".25"/>
+          <path d="M14 72 A46 46 0 0 1 106 72" fill="none" stroke="url(#gg4)" stroke-width="8" stroke-linecap="round" stroke-dasharray="145" stroke-dashoffset="58"/>
+          <line id="needle" x1="60" y1="68" x2="60" y2="32" stroke="#fff" stroke-width="2" stroke-linecap="round" transform="rotate(-25,60,68)"/>
+          <circle cx="60" cy="68" r="4" fill="#fff" opacity=".9"/>
+          <text x="60" y="78" text-anchor="middle" fill="#E8F0FF" font-size="11" font-family="Syne,sans-serif" font-weight="800">1.8 bar</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 5. SCALE GAUGES ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">05</div>
+      <div class="sec-title">Scale Gauge — Vertical &amp; Horizontal</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <!-- Vertical -->
+      <div class="widget" style="min-width:120px;">
+        <div class="widget-label">Fuel Level</div>
+        <div class="vscale-wrap">
+          <div style="position:relative;">
+            <div class="vscale-track" id="vs1"><div class="vscale-fill" style="height:65%;background:linear-gradient(to top,#0072FF,#00C6FF);"></div></div>
+          </div>
+          <div class="vscale-labels"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+        </div>
+        <div class="widget-value" style="color:#00C6FF;">65 L</div>
+      </div>
+      <!-- Vertical amber -->
+      <div class="widget" style="min-width:120px;">
+        <div class="widget-label">Voltage</div>
+        <div class="vscale-wrap">
+          <div>
+            <div class="vscale-track" id="vs2"><div class="vscale-fill" style="height:80%;background:linear-gradient(to top,#FFB800,#FFD700);"></div></div>
+          </div>
+          <div class="vscale-labels"><span>240</span><span>220</span><span>200</span><span>180</span><span>0</span></div>
+        </div>
+        <div class="widget-value" style="color:#FFB800;">216 V</div>
+      </div>
+      <!-- Vertical red alert -->
+      <div class="widget" style="min-width:120px;">
+        <div class="widget-label">Temp Alert</div>
+        <div class="vscale-wrap">
+          <div>
+            <div class="vscale-track" id="vs3"><div class="vscale-fill" style="height:90%;background:linear-gradient(to top,#FF5F57,#FF9F40);"></div></div>
+          </div>
+          <div class="vscale-labels"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+        </div>
+        <div class="widget-value" style="color:#FF5F57;">88 °C</div>
+      </div>
+      <!-- Horizontal 1 -->
+      <div class="widget" style="min-width:240px;">
+        <div class="widget-label">Humidity</div>
+        <div>
+          <div class="hscale-track" id="hs1"><div class="hscale-fill" id="hs1-fill" style="width:72%;background:linear-gradient(90deg,#0072FF,#00C6FF);"></div></div>
+          <div class="hscale-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+        </div>
+        <div class="widget-value" style="color:#00C6FF;">72% RH</div>
+      </div>
+      <!-- Horizontal 2 -->
+      <div class="widget" style="min-width:240px;">
+        <div class="widget-label">Motor Load</div>
+        <div>
+          <div class="hscale-track"><div class="hscale-fill" style="width:45%;background:linear-gradient(90deg,#00FFB2,#0072FF);"></div></div>
+          <div class="hscale-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+        </div>
+        <div class="widget-value" style="color:#00FFB2;">45%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 6. TEMPERATURE WIDGET ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">06</div>
+      <div class="sec-title">Temperature</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <div class="widget" style="min-width:120px;">
+        <div class="widget-label">Zone A</div>
+        <div class="thermo-wrap">
+          <div class="thermo-body">
+            <div class="thermo-tube"><div class="thermo-fill" style="height:72%;"></div></div>
+            <div class="thermo-bulb"></div>
+          </div>
+          <div class="widget-value" style="color:#FF5F57;font-size:1.1rem;">72°C</div>
+        </div>
+      </div>
+      <div class="widget" style="min-width:120px;">
+        <div class="widget-label">Zone B</div>
+        <div class="thermo-wrap">
+          <div class="thermo-body">
+            <div class="thermo-tube"><div class="thermo-fill" style="height:40%;background:linear-gradient(to top,#FFB800,#FFDC80);"></div></div>
+            <div class="thermo-bulb" style="background:#FFB800;border-color:rgba(255,184,0,.3);box-shadow:0 0 12px rgba(255,184,0,.4);"></div>
+          </div>
+          <div class="widget-value" style="color:#FFB800;font-size:1.1rem;">40°C</div>
+        </div>
+      </div>
+      <div class="widget" style="min-width:120px;">
+        <div class="widget-label">Zone C</div>
+        <div class="thermo-wrap">
+          <div class="thermo-body">
+            <div class="thermo-tube"><div class="thermo-fill" style="height:20%;background:linear-gradient(to top,#00C6FF,#60EFFF);"></div></div>
+            <div class="thermo-bulb" style="background:#00C6FF;border-color:rgba(0,198,255,.3);box-shadow:0 0 12px rgba(0,198,255,.4);"></div>
+          </div>
+          <div class="widget-value" style="color:#00C6FF;font-size:1.1rem;">20°C</div>
+        </div>
+      </div>
+      <!-- Live animated thermometer -->
+      <div class="widget" style="min-width:140px;">
+        <div class="widget-label">Live — Boiler</div>
+        <div class="thermo-wrap">
+          <div class="thermo-body">
+            <div class="thermo-tube"><div class="thermo-fill" id="live-thermo" style="height:55%;"></div></div>
+            <div class="thermo-bulb" id="live-bulb"></div>
+          </div>
+          <div class="widget-value" id="live-temp-val" style="color:#FF5F57;font-size:1.1rem;">55°C</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 7. SLIDER LEVEL ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">07</div>
+      <div class="sec-title">Slider Level</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row" style="flex-direction:column;align-items:flex-start;">
+      <div class="widget" style="width:100%;max-width:420px;">
+        <div class="widget-label" style="text-align:left;width:100%;">Pump Speed — <span id="pump-val">60</span>%</div>
+        <div class="slider-wrap">
+          <input type="range" class="iris-slider" min="0" max="100" value="60" id="pump-slider"
+            oninput="updateSlider(this,'pump-val')"/>
+          <div class="slider-row"><span>0%</span><span>50%</span><span>100%</span></div>
+        </div>
+      </div>
+      <div class="widget" style="width:100%;max-width:420px;">
+        <div class="widget-label" style="text-align:left;width:100%;">Valve Opening — <span id="valve-val">35</span>%</div>
+        <div class="slider-wrap">
+          <input type="range" class="iris-slider" min="0" max="100" value="35" id="valve-slider"
+            style="background-image:linear-gradient(#00FFB2,#00FFB2);"
+            oninput="updateSlider(this,'valve-val')"/>
+          <div class="slider-row"><span>Closed</span><span>50%</span><span>Open</span></div>
+        </div>
+      </div>
+      <div class="widget" style="width:100%;max-width:420px;">
+        <div class="widget-label" style="text-align:left;width:100%;">Set Point Temp — <span id="setpt-val">75</span>°C</div>
+        <div class="slider-wrap">
+          <input type="range" class="iris-slider" min="0" max="120" value="75" id="setpt-slider"
+            style="background-image:linear-gradient(#FF9F40,#FF9F40);"
+            oninput="updateSlider(this,'setpt-val')"/>
+          <div class="slider-row"><span>0°C</span><span>60°C</span><span>120°C</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 8. ICON BUTTON ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">08</div>
+      <div class="sec-title">Icon Button</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <div class="widget">
+        <div class="widget-label">Send</div>
+        <button class="icon-btn ib-primary" onclick="showToast('Command dispatched')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Online</div>
+        <button class="icon-btn ib-success" onclick="showToast('Device online','#00FFB2')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Stop</div>
+        <button class="icon-btn ib-danger" onclick="showToast('Device stopped','#FF5F57')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Warning</div>
+        <button class="icon-btn ib-warn" onclick="showToast('Alert acknowledged','#FFB800')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Refresh</div>
+        <button class="icon-btn ib-ghost" onclick="showToast('Refreshed')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </button>
+      </div>
+      <div class="widget">
+        <div class="widget-label">Settings</div>
+        <button class="icon-btn ib-ghost" onclick="showToast('Settings')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 9. LED ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">09</div>
+      <div class="sec-title">LED Indicator</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row">
+      <div class="widget" style="min-width:300px;">
+        <div class="widget-label">Device Status Panel</div>
+        <div class="led-grid">
+          <div class="led-item"><div class="led green"></div><span class="led-label">Gateway-01<br/>Online</span></div>
+          <div class="led-item"><div class="led green"></div><span class="led-label">Sensor-A7<br/>Online</span></div>
+          <div class="led-item"><div class="led amber blink"></div><span class="led-label">Motor-12<br/>Warning</span></div>
+          <div class="led-item"><div class="led red"></div><span class="led-label">Pump-03<br/>Offline</span></div>
+          <div class="led-item"><div class="led blue"></div><span class="led-label">Cloud<br/>Connected</span></div>
+          <div class="led-item"><div class="led off"></div><span class="led-label">Tank-B<br/>Inactive</span></div>
+          <div class="led-item"><div class="led green"></div><span class="led-label">Valve-04<br/>Open</span></div>
+          <div class="led-item"><div class="led amber"></div><span class="led-label">HMI-02<br/>Standby</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 10. CHARTS ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">10</div>
+      <div class="sec-title">Charts</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="charts-grid">
+      <!-- Line chart -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <span class="chart-title">Temperature Trend</span>
+          <span class="chart-badge cb-green">Live</span>
+        </div>
+        <div class="chart-area"><canvas id="chart-line" height="140"></canvas></div>
+      </div>
+      <!-- Bar chart -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <span class="chart-title">Energy Usage</span>
+          <span class="chart-badge cb-blue">kWh</span>
+        </div>
+        <div class="chart-area"><canvas id="chart-bar" height="140"></canvas></div>
+      </div>
+      <!-- Doughnut -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <span class="chart-title">Device Status</span>
+          <span class="chart-badge cb-amber">Summary</span>
+        </div>
+        <div class="chart-area" style="display:flex;justify-content:center;">
+          <canvas id="chart-donut" height="140" style="max-width:350px;"></canvas>
+        </div>
+      </div>
+      <!-- Area chart -->
+      <div class="chart-card" style="grid-column:1/3;">
+        <div class="chart-head">
+          <span class="chart-title">Data Throughput — Last 24h</span>
+          <span class="chart-badge cb-blue">msg/min</span>
+        </div>
+        <div class="chart-area"><canvas id="chart-area" height="120"></canvas></div>
+      </div>
+      <!-- Scatter -->
+      <div class="chart-card">
+        <div class="chart-head">
+          <span class="chart-title">Pressure vs Flow</span>
+          <span class="chart-badge cb-green">Scatter</span>
+        </div>
+        <div class="chart-area"><canvas id="chart-scatter" height="140"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 11. TEXT INPUT ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">11</div>
+      <div class="sec-title">Text Input</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row" style="align-items:flex-start;">
+      <div class="widget" style="min-width:220px;align-items:flex-start;">
+        <div class="widget-label" style="text-align:left;">Device Name</div>
+        <div class="text-input-wrap" style="width:100%;">
+          <div class="inp-wrap">
+            <div class="inp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <input type="text" class="iris-input" placeholder="e.g. Gateway-01" id="ti-device"/>
+          </div>
+          <span class="inp-hint" id="ti-device-hint">Enter a unique device identifier</span>
+        </div>
+      </div>
+      <div class="widget" style="min-width:220px;align-items:flex-start;">
+        <div class="widget-label" style="text-align:left;">Notes / Description</div>
+        <div class="text-input-wrap" style="width:100%;">
+          <textarea class="iris-input" placeholder="Add device notes here…"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ 12. NUMERIC INPUT ════════ -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-label">12</div>
+      <div class="sec-title">Numeric Input</div>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="widgets-row" style="align-items:flex-start;">
+      <div class="widget" style="min-width:200px;align-items:flex-start;">
+        <div class="widget-label" style="text-align:left;">Poll Interval</div>
+        <div class="num-input-wrap">
+          <button class="num-btn" onclick="numStep('ni1',-1)">−</button>
+          <input class="num-field" type="number" id="ni1" value="5" min="1" max="3600"/>
+          <span class="num-unit-label">sec</span>
+          <button class="num-btn" onclick="numStep('ni1',1)">+</button>
+        </div>
+      </div>
+      <div class="widget" style="min-width:200px;align-items:flex-start;">
+        <div class="widget-label" style="text-align:left;">Alarm Threshold</div>
+        <div class="num-input-wrap">
+          <button class="num-btn" onclick="numStep('ni2',-5)">−</button>
+          <input class="num-field" type="number" id="ni2" value="80" min="0" max="200"/>
+          <span class="num-unit-label">°C</span>
+          <button class="num-btn" onclick="numStep('ni2',5)">+</button>
+        </div>
+      </div>
+      <div class="widget" style="min-width:200px;align-items:flex-start;">
+        <div class="widget-label" style="text-align:left;">Modbus Address</div>
+        <div class="num-input-wrap">
+          <button class="num-btn" onclick="numStep('ni3',-1)">−</button>
+          <input class="num-field" type="number" id="ni3" value="1" min="1" max="247"/>
+          <span class="num-unit-label">addr</span>
+          <button class="num-btn" onclick="numStep('ni3',1)">+</button>
+        </div>
+      </div>
+      <div class="widget" style="min-width:200px;align-items:flex-start;">
+        <div class="widget-label" style="text-align:left;">Data Retention</div>
+        <div class="num-input-wrap">
+          <button class="num-btn" onclick="numStep('ni4',-1)">−</button>
+          <input class="num-field" type="number" id="ni4" value="30" min="1" max="365"/>
+          <span class="num-unit-label">days</span>
+          <button class="num-btn" onclick="numStep('ni4',1)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- Toast -->
+<div id="toast" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:#071540;border:1px solid rgba(0,255,178,.25);border-radius:10px;padding:11px 20px;
+  display:flex;align-items:center;gap:9px;font-size:.84rem;color:#00FFB2;
+  opacity:0;pointer-events:none;transition:all .3s;z-index:999;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);white-space:nowrap;">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg">Done</span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
