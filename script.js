@@ -182,3 +182,105 @@ setInterval(() => {
   }
 }, 2000);
 
+new Chart(document.getElementById('gauge-1','gauge-2'), {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [90,10],
+      backgroundColor: ['rgba(255, 0, 43, 0.8)','rgb(0, 11, 40)'],
+      borderColor: ['#010C29'],
+      borderWidth: 2
+    }]
+  },
+  options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        circumference: 180,
+        rotation: -90,
+        cutout: '70%'
+    }
+ });
+new Chart(document.getElementById('gauge-2'), {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [50,50],
+      backgroundColor: ['rgba(229, 255, 0, 0.8)','rgb(0, 11, 40)'],
+      borderColor: ['#010C29'],
+      borderWidth: 2
+    }]
+  },
+  options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        circumference: 180,
+        rotation: -90,
+        cutout: '70%'
+    }
+ });
+ new Chart(document.getElementById('gauge-3'), {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [95,5],
+      backgroundColor: ['rgba(0, 255, 98, 0.8)','rgb(0, 11, 40)'],
+      borderColor: ['#010C29'],
+      borderWidth: 2
+    }]
+  },
+  options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        circumference: 180,
+        rotation: -90,
+        cutout: '70%'
+    }
+ });
+new Chart(document.getElementById('gauge-4'), {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [75,25],
+      backgroundColor: ['rgba(0, 162, 255, 0.8)','rgb(0, 11, 40)'],
+      borderColor: ['#010C29'],
+      borderWidth: 2
+    }]
+  },
+  options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        circumference: 180,
+        rotation: -90,
+        cutout: '70%'
+    }
+ });
+ 
+let map;
+        let marker;
+
+        const locations = {
+            microchip: { lat: 12.87868, lng: 80.21466 }, 
+            isro: { lat: 8.28252, lng: 77.56798 },      
+            drdo: { lat: 13.12370, lng: 80.09834 }  
+        };
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: locations.microchip,
+                zoom: 12
+            });
+
+            marker = new google.maps.Marker({
+                position: locations.microchip,
+                map: map
+            });
+        }
+
+        function loadLocation(place) {
+            const loc = locations[place];
+
+            map.setCenter(loc);
+            map.setZoom(14);
+
+            marker.setPosition(loc);
+        }
